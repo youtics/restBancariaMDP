@@ -42,7 +42,7 @@ const UsuarioSechema = Schema({
     },
     role: {
         type: String,
-        required: [true, 'El campo es requerido'],
+        required: [true, 'El campo role es requerido'],
         enum: ['ADMIN_ROLE', 'USER_ROLE']
     },
     estado: {
