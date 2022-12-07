@@ -31,6 +31,11 @@ router.post('/',
     validarCampos
 ] ,usuariosPost);
 
-router.delete('/', usuariosDelete);
+router.delete('/:id',
+[
+    check('id', 'No es un id valido de Mongodb').isMongoId(),
+    check('id').custom(existeidDB),
+    validarCampos
+] ,usuariosDelete);
 
 module.exports = router

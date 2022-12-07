@@ -48,14 +48,21 @@ const usuariosPut = async (req, res = response) => {
 const usuariosGet = async(req = request, res = response) => {
 
     const {limite=5, desde = 0} = req.query;
-    const usuarios = await Usuario.find({estado: true})
+    const query = {estado: false};
+    /*const usuarios = await Usuario.find({estado: true})
         .skip(Number(desde))
         .limit(Number(limite));
 
-    const total = await Usuario.countDocuments({estado:true});
+    const total = await Usuario.countDocuments({estado:true}); */
+    const [total, usuarios] = await Promise.all([
+        Usuario.countDocuments(query),
+        Usuario.find(query)
+            .skip(Number(desde))
+            .limit(Number(limite))
+    ]);
+
     res.json({
         total,
-        msg:'get API - controller',
         usuarios
     });
 }
@@ -67,10 +74,16 @@ const usuariosGet = async(req = request, res = response) => {
 
 
 
-const usuariosDelete = (req, res = response) => {
-    res.json({
-        msg:'delete API - controller'
-    })
+const usuariosDelete = async (req, res = response) => {
+    const { id } = req.params;
+
+    //borrar fisicamente
+    //const usuario = await Usuario.findByIdAndDelete(id);
+    const usuario = await Usuario.findByIdAndUpdate(id, {estado: true});
+
+    res.json(
+        usuario
+    );
 }
 
 module.exports = {
