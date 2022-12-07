@@ -1,21 +1,18 @@
-
-
 /* {
-    nombre: '',
-    apellido: '',
-    dni:
-    email: '',
-    user: '',
-    password: '',
-    img: 'url'
-    role: ''
-    estado: Boolean
-    google: false
+
+    "apellido": "Chaldu",
+    "nombre": "Gabriel",
+    "email": "gabriel@test.com",
+    "dni": 22555555,
+    "nroAfiliado": 123,
+    "password": "123",
+    "img": "",
+    "role": "ADMIN_ROLE"
 } */
 
 const {Schema, model} = require ('mongoose');
 
-const UsuarioSechema = Schema({
+const UsuarioSchema = Schema({
     apellido: {
         type: String,
         required: [true, 'El campo es requerido'],
@@ -32,6 +29,12 @@ const UsuarioSechema = Schema({
     dni: {
         type: Number,
         required: [true, 'El campo es requerido'],
+        unique:true
+    },
+    nroAfiliado: {
+        type: Number,
+        required: [true, 'El campo es requerido'],
+        unique:true
     },
     password: {
         type: String,
@@ -43,11 +46,11 @@ const UsuarioSechema = Schema({
     role: {
         type: String,
         required: [true, 'El campo role es requerido'],
-        enum: ['ADMIN_ROLE', 'USER_ROLE']
+        //enum: ['ADMIN_ROLE', 'USER_ROLE']
     },
     estado: {
         type: Boolean,
-        default: true,
+        default: false,
     },
     google: {
         type: Boolean,
@@ -56,5 +59,9 @@ const UsuarioSechema = Schema({
 
 });
 
-
-module.exports = model('Usuario', UsuarioSechema); 
+//esta funcion extrae del json que muestra por consola a __v y el password encriptado
+UsuarioSchema.methods.toJSON = function() {
+    const {__v, password, ...usuario} = this.toObject();
+    return usuario;
+}
+module.exports = model('Usuario', UsuarioSchema);
