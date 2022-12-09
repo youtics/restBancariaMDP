@@ -61,7 +61,8 @@ const UsuarioSchema = Schema({
 
 //esta funcion extrae del json que muestra por consola a __v y el password encriptado
 UsuarioSchema.methods.toJSON = function() {
-    const {__v, password, ...usuario} = this.toObject();
+    const {__v, password, _id, ...usuario} = this.toObject();
+    usuario.uid = _id;
     return usuario;
 }
 module.exports = model('Usuario', UsuarioSchema);

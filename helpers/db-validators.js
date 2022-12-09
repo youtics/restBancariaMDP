@@ -39,16 +39,23 @@ const existeNroAfDB = async nroAfiliado=>{
     }
 }
 
-//verificar el nro de legajo
-const existeidDB = async id=>{
-    const existeID = await Usuario.findById({id})
+//verificar si el id existe
+const existeidDB = async (id) => {
+    const existeID = await Usuario.findById(id);
 
-    if (existeID)
+    if (!existeID)
     {
         throw new Error (`El de ID ${id} ya existe en la BD`);
     }
 }
+const existeUsuarioPorId = async( id ) => {
+
+    // Verificar si el correo existe
+    const existeUsuario = await Usuario.findById(id);
+    if ( !existeUsuario ) {
+        throw new Error(`El id no existe ${ id }`);
+    }
+}
 
 
-
-module.exports = {esRoleValido, existeMailDB, existeDNIDB, existeNroAfDB, existeidDB}
+module.exports = {esRoleValido, existeMailDB, existeDNIDB, existeNroAfDB, existeidDB, existeUsuarioPorId}
