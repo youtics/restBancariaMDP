@@ -7,18 +7,24 @@ const {esRoleValido, existeMailDB, existeDNIDB, existeNroAfDB, existeidDB, exist
 const { validarJWT } = require('../middlewares/validar-jwt');
 const { esAdminRole, tieneRol } = require('../middlewares/validar-roles');
 
-router.get('/', usuariosGet );
+router.get('/',
+[
+    validarJWT,
+    tieneRol('ADMIN_ROLE'),
+] ,usuariosGet );
 
 router.put('/:id',
 [
-   check('id', 'No es un id valido de Mongodb').isMongoId(),
-   check('id').custom(existeidDB),
-   check('role').custom(esRoleValido),
-   validarCampos
+    check('id', 'No es un id valido de Mongodb').isMongoId(),
+    check('id').custom(existeidDB),
+    check('role').custom(esRoleValido),
+    validarCampos
 ],usuariosPut);
 
 router.post('/',
 [
+    validarJWT,
+    tieneRol('ADMIN_ROLE'),
     check('apellido', 'El apellido es obligatorio').not().isEmpty(),
     check('nombre', 'El nombre es obligatorio').not().isEmpty(),
     check('password', 'Es obligatorio y mas de 6 letras').isLength({min:6}),
