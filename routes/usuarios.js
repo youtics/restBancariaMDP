@@ -5,6 +5,7 @@ const {validarCampos} = require ('../middlewares/validar-campos');
 const router = Router();
 const {esRoleValido, existeMailDB, existeDNIDB, existeNroAfDB, existeidDB, existeUsuarioPorId} = require ('../helpers/db-validators');
 const { validarJWT } = require('../middlewares/validar-jwt');
+const { esAdminRole, tieneRol } = require('../middlewares/validar-roles');
 
 router.get('/', usuariosGet );
 
@@ -35,6 +36,8 @@ router.post('/',
 router.delete('/:id',
 [
     validarJWT,
+    //esAdminRole,
+    tieneRol('ADMIN_ROLE'),
     check('id', 'El id que quiere eleminar No es un id valido de Mongodb').isMongoId(),
     check('id').custom(existeUsuarioPorId),
     validarCampos

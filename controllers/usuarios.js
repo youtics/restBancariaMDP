@@ -68,20 +68,16 @@ const usuariosGet = async(req = request, res = response) => {
 }
 
 
-
-
-
-
-
-
-const usuariosDelete = async (req, res = response) => {
+const usuariosDelete = async (req = request, res = response) => {
     const { id } = req.params;
     //borrar fisicamente
     //const usuario = await Usuario.findByIdAndDelete(id);
     const usuario = await Usuario.findByIdAndUpdate(id, {estado: true});
+    //const usuarioAuntenticado = req.usuario;
 
     res.json(
         usuario,
+        //usuarioAuntenticado
     );
 }
 
