@@ -47,7 +47,7 @@ const usuariosPut = async (req, res = response) => {
 
 const usuariosGet = async(req = request, res = response) => {
 
-    const {limite=5, desde = 0} = req.query;
+    const {limite, desde = 0} = req.query;
     const query = {estado: false};
     /*const usuarios = await Usuario.find({estado: true})
         .skip(Number(desde))
@@ -60,7 +60,6 @@ const usuariosGet = async(req = request, res = response) => {
             .skip(Number(desde))
             .limit(Number(limite))
     ]);
-
     res.json({
         total,
         usuarios

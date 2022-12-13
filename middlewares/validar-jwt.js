@@ -8,7 +8,7 @@ const validarJWT = async(req = request, res = response, next) =>{
     console.log(token);
     if(!token)
     {
-        return res.status(401).json({
+        return res.json({
             msg: 'No ha iniciado sesión'
         });
     }
@@ -20,7 +20,7 @@ const validarJWT = async(req = request, res = response, next) =>{
         const usuario = await Usuario.findById(uid);
         if(!usuario)
         {
-            return res.status(401).json({
+            return res.json({
                 msg: 'El Usuario no existe'
             })
         }
@@ -38,7 +38,7 @@ const validarJWT = async(req = request, res = response, next) =>{
         next();
     }catch(error){
         console.log(error);
-        return res.status(401).json({
+        return res.json({
             msg: 'Token no valido...'
         })
     }
