@@ -9,7 +9,7 @@ const { esAdminRole, tieneRol } = require('../middlewares/validar-roles');
 
 router.get('/',
 [
-    //validarJWT,
+    validarJWT,
     //tieneRol('ADMIN_ROLE'),
 ] ,usuariosGet );
 
