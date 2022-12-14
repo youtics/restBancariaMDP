@@ -23,15 +23,15 @@ const usuariosPost = async (req, res = response) => {
 const usuariosPut = async (req, res = response) => {
 
     const {id} = req.params;
-    //const {DATOS EXCLUIDOS... EL RESTO QUEDA INCLUIDO EN LA VARIABLE }
-    const {_id, password, google, email, ... restoInfo} = req.body;
+    //const {DATOS EXCLUIDOS PARA ACTUALIZAR... EL RESTO QUEDA INCLUIDO EN LA VARIABLE }
+    const {_id, ... restoInfo} = req.body;
 
     //validar contra DB
-    if(password)
+    if(restoInfo.password)
     {
         //encriptar contraseña
         const salt = bcryptjs.genSaltSync();
-        restoInfo.password = bcryptjs.hashSync(password, salt);
+        restoInfo.password = bcryptjs.hashSync(restoInfo.password, salt);
     }
 
     const usuario = await Usuario.findByIdAndUpdate(id, restoInfo);
@@ -48,7 +48,7 @@ const usuariosPut = async (req, res = response) => {
 const usuariosGet = async(req = request, res = response) => {
 
     const {limite, desde = 0} = req.query;
-    const query = {estado: false};
+    const query = {};
     /*const usuarios = await Usuario.find({estado: true})
         .skip(Number(desde))
         .limit(Number(limite));
