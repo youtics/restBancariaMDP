@@ -8,11 +8,8 @@ class Server{
         this.port = process.env.PORT;
         this.usuariosPath = '/api/usuarios';
         this.authPath = '/api/auth';
-
         //conectarme a la de¡b de Mongo atlas
         this.conectarDB();
-
-
         //Middlewares
         this.middlewares();
         //rutas de mi app

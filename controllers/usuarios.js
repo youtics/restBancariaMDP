@@ -48,12 +48,29 @@ const usuariosPut = async (req, res = response) => {
 const usuariosGet = async(req = request, res = response) => {
 
     const {limite, desde = 0} = req.query;
-    const query = {};
+    const query = {estado:true};
     /*const usuarios = await Usuario.find({estado: true})
         .skip(Number(desde))
         .limit(Number(limite));
 
     const total = await Usuario.countDocuments({estado:true}); */
+    const [total, usuarios] = await Promise.all([
+        Usuario.countDocuments(query),
+        Usuario.find(query)
+            .skip(Number(desde))
+            .limit(Number(limite))
+    ]);
+    res.json({
+        ok:'ok',
+        total,
+        usuarios
+    });
+}
+
+const usuariosGetBaja = async(req = request, res = response) => {
+
+    const {limite, desde = 0} = req.query;
+    const query = {estado:false};
     const [total, usuarios] = await Promise.all([
         Usuario.countDocuments(query),
         Usuario.find(query)
@@ -85,5 +102,6 @@ module.exports = {
     usuariosGet,
     usuariosDelete,
     usuariosPost,
-    usuariosPut
+    usuariosPut,
+    usuariosGetBaja,
 }

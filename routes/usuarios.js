@@ -1,6 +1,6 @@
 const {Router} = require ('express');
 const {check}= require('express-validator');
-const { usuariosGet, usuariosPut, usuariosPost, usuariosDelete } = require('../controllers/usuarios');
+const { usuariosGet, usuariosPut, usuariosPost, usuariosDelete, usuariosGetBaja } = require('../controllers/usuarios');
 const {validarCampos} = require ('../middlewares/validar-campos');
 const router = Router();
 const {esRoleValido, existeMailDB, existeDNIDB, existeNroAfDB, existeidDB, existeUsuarioPorId} = require ('../helpers/db-validators');
@@ -12,6 +12,13 @@ router.get('/',
     validarJWT,
     //tieneRol('ADMIN_ROLE'),
 ] ,usuariosGet );
+
+router.get('/baja',
+[
+    validarJWT,
+    //tieneRol('ADMIN_ROLE'),
+] ,usuariosGetBaja );
+
 
 router.put('/:id',
 [
