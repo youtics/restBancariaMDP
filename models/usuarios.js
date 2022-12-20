@@ -40,8 +40,8 @@ const UsuarioSchema = Schema({
         type: String,
         required: [true, 'El campo es requerido'],
     },
-    img: {
-        type: String,
+    avatar: {
+        type: String = 'av-1.png',
     },
     role: {
         type: String,
