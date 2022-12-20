@@ -80,7 +80,18 @@ const usuariosGetBaja = async(req = request, res = response) => {
     res.json({
         ok:'ok',
         total,
-        usuarios
+        usuariosr
+    });
+}
+
+const usuariosGetById = async(req = request, res = response) => {
+
+    const {id} = req.params;
+    const usuario = await Usuario.findById({_id:id})
+            
+    res.json({
+        ok:'ok',
+        usuario
     });
 }
 
@@ -104,4 +115,5 @@ module.exports = {
     usuariosPost,
     usuariosPut,
     usuariosGetBaja,
+    usuariosGetById
 }
